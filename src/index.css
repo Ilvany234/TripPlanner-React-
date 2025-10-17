@@ -1,0 +1,40 @@
+/* ===== TRIPPLANNER - ESTILOS GLOBALES ===== */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+:root {
+  --brand: #ff9900;
+  --bg: #0b1220;
+  --text: #ffffff;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  margin: 0;
+  background: linear-gradient(180deg, #0b1220 0%, #071226 100%);
+  color: var(--text);
+}
+
+.hero {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 4rem 1rem;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.btn-primary {
+  background-color: var(--brand);
+  border: none;
+  font-weight: 600;
+}
+
+.servicio-check {
+  color: #fff;
+}
