@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { register } from '../api/userService';
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -8,6 +9,8 @@ const Register = () => {
         password: ''
     });
 
+    const navigate = useNavigate();
+
     const handleChange = (e) => {
         setFormData({
             ...formData,
@@ -15,10 +18,17 @@ const Register = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Register data:', formData);
-        // Add registration logic here
+        try {
+            await register(formData);
+            alert('Registro exitoso. Por favor inicia sesión.');
+            navigate('/login');
+        } catch (error) {
+            console.error("Registration Error:", error);
+            const errorMessage = error.response?.data?.message || error.message || 'Error en el registro';
+            alert(`Error: ${errorMessage}`);
+        }
     };
 
     return (

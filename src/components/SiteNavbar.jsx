@@ -2,6 +2,7 @@ import React from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { PersonCircle } from "react-bootstrap-icons";
 
 const SiteNavbar = () => {
   const { user, logout } = useAuth();
@@ -25,7 +26,10 @@ const SiteNavbar = () => {
             {user && (
               <>
                 <Nav.Link as={NavLink} to="/admin-destinos" className="btn btn-outline-warning text-white me-2">Administrar Destinos</Nav.Link>
-                <Nav.Link as={NavLink} to="/perfil" className="me-2">Editar Perfil</Nav.Link>
+                <Nav.Link as={NavLink} to="/perfil" className="btn btn-primary text-white px-3 py-2 rounded-3 me-2 d-flex align-items-center gap-2">
+                  <PersonCircle size={20} />
+                  <span>{user.username || user.name || 'Perfil'}</span>
+                </Nav.Link>
               </>
             )}
             {user ? (

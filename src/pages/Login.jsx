@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { login as apiLogin } from '../api/userService';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -17,12 +18,15 @@ const Login = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Login data:', formData);
-    // Simulate successful login
-    login({ email: formData.email, name: 'Usuario Demo' });
-    navigate('/');
+    try {
+      const userData = await apiLogin({ email: formData.email, password: formData.password });
+      login(userData);
+      navigate('/');
+    } catch (error) {
+      alert('Credenciales inválidas');
+    }
   };
 
   return (

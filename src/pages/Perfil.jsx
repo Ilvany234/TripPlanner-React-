@@ -7,16 +7,20 @@ const Perfil = () => {
     const { user, updateUser, deleteUser } = useAuth();
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
-        name: '',
-        email: ''
+        username: '',
+        email: '',
+        password: '',
+        confirmPassword: ''
     });
     const [message, setMessage] = useState('');
 
     useEffect(() => {
         if (user) {
             setFormData({
-                name: user.name || '',
-                email: user.email || ''
+                username: user.username || user.name || '',
+                email: user.email || '',
+                password: '',
+                confirmPassword: ''
             });
         }
     }, [user]);
@@ -30,7 +34,21 @@ const Perfil = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        updateUser(formData);
+        if (formData.password !== formData.confirmPassword) {
+            alert("Las contraseñas no coinciden");
+            return;
+        }
+
+        const dataToSend = {
+            username: formData.username,
+            email: formData.email
+        };
+
+        if (formData.password) {
+            dataToSend.password = formData.password;
+        }
+
+        updateUser(dataToSend);
         setMessage('Perfil actualizado correctamente.');
         setTimeout(() => setMessage(''), 3000);
     };
@@ -57,8 +75,8 @@ const Perfil = () => {
                             <Form.Label>Nombre de Usuario</Form.Label>
                             <Form.Control
                                 type="text"
-                                name="name"
-                                value={formData.name}
+                                name="username"
+                                value={formData.username}
                                 onChange={handleChange}
                                 className="bg-secondary text-white border-0"
                             />
@@ -72,6 +90,30 @@ const Perfil = () => {
                                 value={formData.email}
                                 onChange={handleChange}
                                 className="bg-secondary text-white border-0"
+                            />
+                        </Form.Group>
+
+                        <Form.Group className="mb-3">
+                            <Form.Label>Nueva Contraseña (dejar en blanco para mantener la actual)</Form.Label>
+                            <Form.Control
+                                type="password"
+                                name="password"
+                                value={formData.password}
+                                onChange={handleChange}
+                                className="bg-secondary text-white border-0"
+                                placeholder="••••••••"
+                            />
+                        </Form.Group>
+
+                        <Form.Group className="mb-4">
+                            <Form.Label>Confirmar Nueva Contraseña</Form.Label>
+                            <Form.Control
+                                type="password"
+                                name="confirmPassword"
+                                value={formData.confirmPassword}
+                                onChange={handleChange}
+                                className="bg-secondary text-white border-0"
+                                placeholder="••••••••"
                             />
                         </Form.Group>
 
